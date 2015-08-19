@@ -5,6 +5,8 @@ class CuisinesController < ApplicationController
 
   def show
     @cuisine = Cuisine.find(params[:id])
+    @dish = Dish.new
+    @dish.name = params[:user_id]
   end
 
   def new

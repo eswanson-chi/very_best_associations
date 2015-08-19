@@ -14,6 +14,58 @@
       <dt>Neighborhood</dt>
       <dd><%= @venue.neighborhood.name %></dd>
 
+      <dt>Favorites</dt>
+      <dd>
+        <ul class="list-group">
+          <% @venue.favorites.each do |favorite| %>
+          <li class="list-group-item">
+            <%= favorite.dish.name %> by <%= favorite.user.username %>
+          </li>
+          <% end %>
+          <li class="list-group-item">
+            <form action="/create_favorite" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="bvMdRRRdsCN6Bgb91gKv/RKKkWZtMXHDwi9pGMCyhtM+LZeJapxdgMLNKcnBG8NiA7wxfcq0rgeVCRvcRIMGzg==">
+
+              <!-- Label and input for user_id -->
+              <div class="form-group">
+                <label for="user_id" class="control-label">
+                     User
+                </label>
+
+                <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :username, @favorite.user_id), :class => "form-control") %>
+
+              </div>
+
+              <!-- Label and input for dish_id -->
+              <div class="form-group">
+                <label for="dish_id" class="control-label">
+                  Dish
+                </label>
+
+                <%= select_tag(:dish_id, options_from_collection_for_select(Dish.all, :id, :name, @favorite.dish_id), :class => "form-control") %>
+
+              </div>
+
+              <!-- Label and input for notes -->
+              <div class="form-group">
+                <label for="notes" class="control-label">
+                  Notes
+                </label>
+                <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @favorite.notes %></textarea>
+              </div>
+
+              <!-- Label and input for venue_id -->
+              <input name="venue_id" type="hidden" value="<%= @venue.id %>">
+
+              <button class="btn btn-success btn-block">
+                Create Favorite
+              </button>
+            </form>
+          </li>
+        </ul>
+      </dd>
+
     </dl>
 
     <div class="btn-group btn-group-justified">

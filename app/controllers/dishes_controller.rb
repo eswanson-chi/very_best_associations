@@ -5,6 +5,10 @@ class DishesController < ApplicationController
 
   def show
     @dish = Dish.find(params[:id])
+    @favorite = Favorite.new
+    @favorite.user_id = params[:user_id]
+    @favorite.venue_id = params[:venue_id]
+    @favorite.notes = params[:notes]
   end
 
   def new

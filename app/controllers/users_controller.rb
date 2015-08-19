@@ -5,6 +5,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @favorite = Favorite.new
+    @favorite.dish_id = params[:dish_id]
+    @favorite.venue_id = params[:venue_id]
+    @favorite.notes = params[:notes]
   end
 
   def new
